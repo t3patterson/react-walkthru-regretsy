@@ -79,7 +79,7 @@ var AppViewController = React.createClass({
   render: function(){
     return (
       <div>
-        <h1 className="principal">Regretsy</h1>
+        <h1 className="principal">Regr<span className="logo">Etsy</span></h1>
         <p><small>...I have a few</small></p>
         <Favs regrettablesColl={this.props.bbCollection_Regrettables}/>
         <MultiDisplay productsColl={this.props.bbCollection_Products}/>

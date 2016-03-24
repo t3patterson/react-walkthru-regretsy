@@ -146,7 +146,8 @@ button.green {
 }
 
 h1.principal{
-    span{
+    
+    > span.logo {
         font-family: Palatino;
         color: #f45800;
     }
