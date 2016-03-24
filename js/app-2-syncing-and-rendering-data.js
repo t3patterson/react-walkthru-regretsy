@@ -120,58 +120,10 @@ var MultiDisplay = React.createClass({
     })
   },
 
-  // 1b 
-  _popListing: function(e){
-    console.log(e)
-    console.log(e.target.dataset['listing'])
-    var listingIdTgt = e.target.dataset['listing']
+  _popListing: function(){
     this.setState({
-      productsList: this.state.productsList.filter(function(mdl){
-        return mdl.get('listing_id') !== parseInt(listingIdTgt)
-      })
+      
     })
-  },
-
-  _handleStarClick: function(e){
-    console.log(e.target.dataset)
-    console.log(e.target.dataset['user_rating'])
-    console.log(e.target.dataset['listing'])
-
-    // id the model
-    var modelToChange = this.state.productsList.find(function(mdl, i){
-      return parseInt(e.target.dataset['listing']) === mdl.get('listing_id')
-    })
-
-    var updatedProducts = this.state.productsList.map(function(mdl, i){
-      if ( parseInt(e.target.dataset['listing']) === mdl.get('listing_id') ){
-        mdl.set({
-          _theRating: e.target.dataset['user_rating']
-        })
-      }
-      return mdl
-    })
-
-    console.log(updatedProducts)
-    this.setState({
-      productsList: updatedProducts
-    })
-
-
-  },
-
-  _createYayBooJSX(rating){
-    if (rating === undefined) { return }
-
-    var cssName
-
-    if (rating === 'yay'){
-      cssName = "good-rating"
-    } else {
-      cssName = "bad-rating"
-    }
-
-    return <p className={cssName}>{rating}</p>
-
   },
 
   _createProducts: function(productList){
@@ -184,14 +136,15 @@ var MultiDisplay = React.createClass({
           <div className="caption">
             <h5>{m.get('title').slice(0,40)+"..."}</h5>
             <p>
-              <button onClick={/*1a*/component._popListing} data-listing={m.get('listing_id')} className="btn btn-warning" role="button">––</button>
+              <button onClick={component._popListing} data-listing={m.get('listing_id')} className="btn btn-warning" role="button">––</button>
             </p>
             <p>
-              <i className="fa fa-thumbs-o-down fa-3x" data-listing={m.get('listing_id')} data-user_rating="boo" onClick={component._handleStarClick}/> 
-              &nbsp;&nbsp;&nbsp;
-              <i className="fa fa-thumbs-o-up fa-3x"   data-listing={m.get('listing_id')} data-user_rating="yay" onClick={component._handleStarClick}/> 
+              <i className="fa fa-star-o fa-2x" data-rating="1"/> 
+              <i className="fa fa-star-o fa-2x" data-rating="2"/> 
+              <i className="fa fa-star-o fa-2x" data-rating="3"/> 
+              <i className="fa fa-star-o fa-2x" data-rating="4"/> 
+              <i className="fa fa-star-o fa-2x" data-rating="5"/>
             </p>
-            {component._createYayBooJSX( m.get('_theRating') )}
           </div>
         </div>
       )
@@ -203,7 +156,6 @@ var MultiDisplay = React.createClass({
   render: function(){
     return (
       <div className="multi-listing align-children">
-          <h2>{this.state.productsList.length} products</h2>
           {this._createProducts(this.state.productsList)}
       </div>
     )
@@ -241,7 +193,7 @@ var Favs = React.createClass({
       var btnTxt = "x"
     } else {
       var styleObj = {right: "-240px"}
-      var btnTxt = ">"
+      var btnTxt = "<"
     }
 
 
