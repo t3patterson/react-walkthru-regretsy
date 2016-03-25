@@ -81,7 +81,7 @@ var AppViewController = React.createClass({
       <div>
         <h1 className="principal">Regr<span className="logo">Etsy</span></h1>
         <p><small>...I have a few</small></p>
-        <Favs regrettablesColl={this.props.bbCollection_Regrettables}/>
+        <RegrettablesList regrettablesColl={this.props.bbCollection_Regrettables}/>
         <MultiDisplay productsColl={this.props.bbCollection_Products}/>
       </div>
     )
@@ -210,7 +210,7 @@ var MultiDisplay = React.createClass({
   }
 })
 
-var Favs = React.createClass({
+var RegrettablesList = React.createClass({
   getInitialState: function(){
     return {
       isShowing: false,

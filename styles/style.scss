@@ -126,7 +126,14 @@ body {
  */
 
 
- $mobile: "screen and (min-width: 640px)";
+$mobile: "screen and (min-width: 640px)";
+
+body{
+  /*   background: url("./images/dots.png") 0 0 fixed;
+    background-size: cover; */
+}
+
+
 .align-children{
     font-size: 0;
 
@@ -172,8 +179,16 @@ h1.principal{
     }
 }
 
+
+h2.product-count{
+    border: 1px solid rgba(154, 18, 179, .7);
+    padding: .5em;
+    color: rgba(154, 18, 179, .8);
+}
+
 .multi-listing{
     >*{
+        position: relative;
         border: 3px solid #333;
         padding: 15px;
         margin: 10px auto;
@@ -181,10 +196,23 @@ h1.principal{
             width: 31.333%;
             margin: 1%;    
         }
-    }
 
-    p{
-        text-align: center;
+        img {
+            width: 100%; 
+        }
+
+        i {
+            cursor: pointer;
+            &.fa-thumbs-o-down:hover{ color: #C0392B; transition: all .06s;}
+            &.fa-thumbs-o-up:hover{ color: #2ECC71; transition: all .06s;}
+
+        }   
+
+        p{ text-align: center; }
+        
+        @mixin yaynay(){position: absolute; top: 50%; left: 0; width: 100%; font-size: 30px; padding: 2em; opacity: .88; transform: translateY(-50%) ;}
+        p.good-rating{@include yaynay(); background: #2ECC71; color: #fff; }
+        p.bad-rating{@include yaynay(); background:  #C0392B; color: #fff;}
     }
 }
 
@@ -200,17 +228,20 @@ h1.principal{
     color: #fff; 
     text-shadow: 1px 1px #D35400;
     font-weight: 700;
-    
+    max-height: 95%;
+
     h3{
         color: #eee;
     }
 
     ul{
         list-style-type: none;
+
         >li{
             padding: 5px;
             border-bottom: #ddd 1px solid;
-            margin: 0;
+            border-left: #ddd 6px solid;
+            margin: 8px 0;
         }
     }
     button {
@@ -222,8 +253,6 @@ h1.principal{
         border: 0px;
         border-radius: 0;
         width: 75px;
+        z-index: 13;
     }
 }
-
-p.good-rating{background: #2ECC71; color: #fff; font-size: 18px; padding: .5em;}
-p.bad-rating{background:  #C0392B; color: #fff; font-size: 18px; padding: .5em;}

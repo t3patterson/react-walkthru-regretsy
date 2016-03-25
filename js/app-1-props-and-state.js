@@ -16,7 +16,6 @@ import DOM from 'react-dom'
 import React, {Component} from 'react'
 
 var ProductModel = Backbone.Model
-
 var ProductCollection = Backbone.Collection.extend({
   accessToken: 'rtf0g2lb2o0xqsksl3jcro8z',
 
@@ -62,13 +61,13 @@ var AppController = React.createClass({
       <div>
         <h1 className="principal">Regr<span className="logo">Etsy</span></h1>
         <p><small>...I have a few</small></p>
-        <Favs regrettables={this.props.collection} />
+        <RegrettablesList regrettables={this.props.collection} />
       </div>
     )
   }
 })
 
-var Favs = React.createClass({
+var RegrettablesList = React.createClass({
   getInitialState: function(){
     return {
       isShowing: false,
