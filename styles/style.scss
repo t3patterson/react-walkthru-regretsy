@@ -228,23 +228,30 @@ h2.product-count{
     color: #fff; 
     text-shadow: 1px 1px #D35400;
     font-weight: 700;
-    max-height: 95%;
+    height: 95%;
 
-    h3{
-        position: relative;
-        color: #eee;
-        margin: 0;
-        line-height: 45px;
-        z-index: 3;
-    }
+    .side-panel{
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        overflow-y: scroll;
 
-    ul{
-        list-style-type: none;
-        >li{
-            padding: 5px;
-            border-bottom: #ddd 1px solid;
-            border-left: #ddd 6px solid;
-            margin: 8px 0;
+        h3{
+            position: relative;
+            color: #eee;
+            margin: 0;
+            line-height: 45px;
+            z-index: 3;
+        }
+
+        ul{
+            list-style-type: none;
+            >li{
+                padding: 5px;
+                border-bottom: #ddd 1px solid;
+                border-left: #ddd 6px solid;
+                margin: 8px 0;
+            }
         }
     }
     button {
