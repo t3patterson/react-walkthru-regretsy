@@ -100,7 +100,7 @@ var RegrettablesList = React.createClass({
     }
 
     return (
-      <div className={"favs"} style={styleObj} onClick={this._toggleMenu}>
+      <div className={"regrets-list"} style={styleObj} onClick={this._toggleMenu}>
         <h3>Regrettables</h3>
         <ul >
           {this._createJSX(this.props.regrettables)}

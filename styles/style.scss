@@ -216,7 +216,7 @@ h2.product-count{
     }
 }
 
-.favs{
+.regrets-list{
     position: fixed; 
     top: 5px; 
     z-index: 10; 
@@ -231,12 +231,15 @@ h2.product-count{
     max-height: 95%;
 
     h3{
+        position: relative;
         color: #eee;
+        margin: 0;
+        line-height: 45px;
+        z-index: 3;
     }
 
     ul{
         list-style-type: none;
-
         >li{
             padding: 5px;
             border-bottom: #ddd 1px solid;

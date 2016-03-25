@@ -12,6 +12,7 @@ import _ from "underscore";
 import Backbone from "backbone";
 
 
+
 import DOM from 'react-dom'
 import React, {Component} from 'react'
 
@@ -31,8 +32,6 @@ var EtsyCollection = Backbone.Collection.extend({
     return payload.results
   }
 })
-
-
 
 var AppRouter = Backbone.Router.extend({
   routes: {
@@ -73,8 +72,6 @@ var AppRouter = Backbone.Router.extend({
   }
 })
 
-console.log(React)
-
 var AppViewController = React.createClass({
   render: function(){
     return (
@@ -82,7 +79,9 @@ var AppViewController = React.createClass({
         <h1 className="principal">Regr<span className="logo">Etsy</span></h1>
         <p><small>...I have a few</small></p>
         <RegrettablesList regrettablesColl={this.props.bbCollection_Regrettables}/>
-        <MultiDisplay productsColl={this.props.bbCollection_Products}/>
+        <MultiDisplay 
+          productsColl={this.props.bbCollection_Products}
+        />
       </div>
     )
   }
@@ -151,10 +150,14 @@ var MultiDisplay = React.createClass({
       return mdl
     })
 
-    console.log(updatedProducts)
+    console.log('triggering new regret')
+    if ( e.target.dataset['user_rating'] === "boo" ) { Backbone.Events.trigger("newRegret", modelToChange) }
+
     this.setState({
       productsList: updatedProducts
     })
+
+
 
 
   },
@@ -181,18 +184,16 @@ var MultiDisplay = React.createClass({
       return (
         <div key={i}>
           <img src={m.get('Images')[0].url_170x135} alt="pic"/>
-          <div className="caption">
-            <h5>{m.get('title').slice(0,40)+"..."}</h5>
-            <p>
-              <button onClick={/*1a*/component._popListing} data-listing={m.get('listing_id')} className="btn btn-warning" role="button">––</button>
-            </p>
-            <p>
-              <i className="fa fa-thumbs-o-down fa-3x" data-listing={m.get('listing_id')} data-user_rating="boo" onClick={component._handleStarClick}/> 
-              &nbsp;&nbsp;&nbsp;
-              <i className="fa fa-thumbs-o-up fa-3x"   data-listing={m.get('listing_id')} data-user_rating="yay" onClick={component._handleStarClick}/> 
-            </p>
-            {component._createYayBooJSX( m.get('_theRating') )}
-          </div>
+          <h5>{m.get('title').slice(0,40)+"..."}</h5>
+          <p>
+            <button onClick={/*1a*/component._popListing} data-listing={m.get('listing_id')} className="btn btn-warning" role="button">––</button>
+          </p>
+          <p>
+            <i className="fa fa-thumbs-o-down fa-3x" data-listing={m.get('listing_id')} data-user_rating="boo" onClick={component._handleStarClick}/> 
+            &nbsp;&nbsp;&nbsp;
+            <i className="fa fa-thumbs-o-up fa-3x"   data-listing={m.get('listing_id')} data-user_rating="yay" onClick={component._handleStarClick}/> 
+          </p>
+          {component._createYayBooJSX( m.get('_theRating') )}
         </div>
       )
 
@@ -200,11 +201,14 @@ var MultiDisplay = React.createClass({
     
   },
 
+
   render: function(){
     return (
-      <div className="multi-listing align-children">
-          <h2>{this.state.productsList.length} products</h2>
-          {this._createProducts(this.state.productsList)}
+      <div className="multi-view">
+          <h2 className="product-count">{this.state.productsList.length} products</h2>
+          <div className="multi-listing align-children" >
+            {this._createProducts(this.state.productsList)}
+          </div>
       </div>
     )
   }
@@ -215,7 +219,6 @@ var RegrettablesList = React.createClass({
     return {
       isShowing: false,
       buttonTxt: "x"
-
     }
   },
 
@@ -235,6 +238,26 @@ var RegrettablesList = React.createClass({
     }
   },
 
+  componentDidMount: function(){
+    var self = this
+
+    console.log('Favs.regrettablesColl: ', this.props.regrettablesColl)
+    Backbone.Events.on('newRegret',function(x){
+      console.log('new regret!')
+      console.log('payload = ', x)
+
+      console.log(self.props.regrettablesColl)
+      self.props.regrettablesColl.add({title: x.get('title')})
+      console.log(self.props.regrettablesColl)
+
+    })
+
+    this.props.regrettablesColl.on("add", function(){
+      console.log('ADDkk on regrettables heard!!')
+      self.forceUpdate() 
+    })
+  },
+
   render: function(){
     if ( this.state.isShowing ){
       var styleObj = {right: "5px"}
@@ -246,12 +269,12 @@ var RegrettablesList = React.createClass({
 
 
     return (
-      <div className={"regrets-list"} style={styleObj} onClick={this._toggleMenu}>
+      <div className={"regrets-list"} style={styleObj} >
         <h3>Regrettables</h3>
-        <ul >
+        <ul>
           {this._createJSX(this.props.regrettablesColl)}
         </ul>
-        <button>{btnTxt}</button>
+        <button onClick={this._toggleMenu}>{btnTxt}</button>
       </div>
     )
 
